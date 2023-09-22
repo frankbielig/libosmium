@@ -316,6 +316,9 @@ namespace osmium {
         }
 
         /// Get user name for this object.
+#if defined(__GNUC__) && (__GNUC__ > 10)
+        [[gnu::noipa]] // avoids stringop-overread warning from GNU compiler
+#endif
         const char* user() const noexcept {
             return reinterpret_cast<const char*>(data() + sizeof_object());
         }

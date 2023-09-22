@@ -51,11 +51,15 @@ namespace osmium {
         friend class osmium::memory::CollectionIterator;
 
         static unsigned char* after_null(unsigned char* ptr) noexcept {
-            return reinterpret_cast<unsigned char*>(std::strchr(reinterpret_cast<char*>(ptr), 0) + 1);
+            while (*ptr) { ++ptr; }
+            ++ptr;
+            return ptr;
         }
 
         static const unsigned char* after_null(const unsigned char* ptr) noexcept {
-            return reinterpret_cast<const unsigned char*>(std::strchr(reinterpret_cast<const char*>(ptr), 0) + 1);
+            while (*ptr) { ++ptr; }
+            ++ptr;
+            return ptr;
         }
 
         unsigned char* next() noexcept {
